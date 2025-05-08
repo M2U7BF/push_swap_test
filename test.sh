@@ -41,8 +41,9 @@ test -d push_swap_tester || git clone https://github.com/nafuka11/push_swap_test
 echo "==================== テスターのテスト（https://github.com/nafuka11/push_swap_tester）"
 cd push_swap_tester
 echo "引数5個が手数12以下か。"
-if [ $(HOGE=$(python3 push_swap_tester.py -l 5 -c 100 | grep "max"); echo ${HOGE:8:10}) -gt 12 ]; then
-  echo "NG. (ログ:$(pwd)/result.log)"
+MAX_5=$(HOGE=$(python3 push_swap_tester.py -l 5 -c 100 | grep "max"); echo ${HOGE:8:10})
+if [ $MAX_5 -gt 12 ]; then
+  echo "NG. max:$MAX_5, (ログ:$(pwd)/result.log)"
 else
   echo "OK"
 fi
