@@ -37,3 +37,10 @@ ARG=(`ruby -e 'print (-50..50).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a 
 ARG=(`ruby -e 'print (-100..0).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
 
 # テスターによるテスト
+test -d push_swap_tester || git clone https://github.com/nafuka11/push_swap_tester
+echo "==================== テスターのテスト（https://github.com/nafuka11/push_swap_tester）"
+cd push_swap_tester
+if [ $(HOGE=$(python3 push_swap_tester.py -l 5 -c 100 | grep "max"); echo ${HOGE:8:10}) -gt 12 ]; then
+  echo "NG. (ログ:$(pwd)/result.log)"
+fi
+cd - 1>/dev/null
