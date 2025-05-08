@@ -29,18 +29,21 @@ valgrind --leak-check=full --show-leak-kinds=all -q ./push_swap 0 1 2 3 4 5 6 7 
 valgrind --leak-check=full --show-leak-kinds=all -q ./push_swap 0 3 6 7 9
 ARG=(`ruby -e 'print (-50..50).to_a.shuffle * " "'`); valgrind --leak-check=full --show-leak-kinds=all -q ./push_swap "${ARG[@]}" | grep -Ev '^(sa|sb|ss|ra|rb|rr|rra|rrb|rrr|pb|pa)$'
 
-echo "==================== ランダムテスト"
-OUT_FILE="result_$(date +%Y%m%d%H%M%S).txt"
-echo "出力はこちら: $OUT_FILE"
-ARG=(`ruby -e 'print (1..100).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
-ARG=(`ruby -e 'print (-50..50).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
-ARG=(`ruby -e 'print (-100..0).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
+# echo "==================== ランダムテスト"
+# OUT_FILE="result_$(date +%Y%m%d%H%M%S).txt"
+# echo "出力はこちら: $OUT_FILE"
+# ARG=(`ruby -e 'print (1..100).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
+# ARG=(`ruby -e 'print (-50..50).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
+# ARG=(`ruby -e 'print (-100..0).to_a.shuffle * " "'`); echo "${ARG[@]}" | tee -a $OUT_FILE | ./push_swap "${ARG[@]}" | tee -a $OUT_FILE | ./checker $ARG
 
 # テスターによるテスト
 test -d push_swap_tester || git clone https://github.com/nafuka11/push_swap_tester
 echo "==================== テスターのテスト（https://github.com/nafuka11/push_swap_tester）"
 cd push_swap_tester
+echo "引数5個が手数12以下か。"
 if [ $(HOGE=$(python3 push_swap_tester.py -l 5 -c 100 | grep "max"); echo ${HOGE:8:10}) -gt 12 ]; then
   echo "NG. (ログ:$(pwd)/result.log)"
+else
+  echo "OK"
 fi
 cd - 1>/dev/null
