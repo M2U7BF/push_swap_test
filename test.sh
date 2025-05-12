@@ -6,9 +6,9 @@ test -f checker || wget -O checker https://cdn.intra.42.fr/document/document/333
 chmod +x checker
 
 # テストのフラグ
-error_test=0
-leak_test=0
-random_test=0
+error_test=1
+leak_test=1
+random_test=1
 tester_test=1
 
 if [ $error_test -eq 1 ]; then
