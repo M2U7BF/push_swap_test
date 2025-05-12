@@ -8,7 +8,7 @@ chmod +x checker
 # テストのフラグ
 error_test=0
 leak_test=0
-random_test=1
+random_test=0
 tester_test=1
 
 if [ $error_test -eq 1 ]; then
@@ -65,6 +65,18 @@ if [ $tester_test -eq 1 ]; then
   test -d push_swap_tester || git clone https://github.com/nafuka11/push_swap_tester
   echo "==================== テスターのテスト（https://github.com/nafuka11/push_swap_tester）"
   cd push_swap_tester
+  python3 push_swap_tester.py -l 1 -c 1000
+  echo ""
+  echo ""
+  python3 push_swap_tester.py -l 2 -c 1000
+  echo ""
+  echo ""
+  python3 push_swap_tester.py -l 3 -c 1000
+  echo ""
+  echo ""
+  python3 push_swap_tester.py -l 4 -c 1000
+  echo ""
+  echo ""
   echo "引数5個が手数12以下か。"
   MAX_5=$(HOGE=$(python3 push_swap_tester.py -l 5 -c 1000 | grep "max"); echo ${HOGE:8:10})
   if [ $MAX_5 -gt 12 ]; then
@@ -72,5 +84,9 @@ if [ $tester_test -eq 1 ]; then
   else
     echo "OK"
   fi
+  echo ""
+  echo ""
+  python3 push_swap_tester.py -l 100 -c 100
+
   cd - 1>/dev/null
 fi
