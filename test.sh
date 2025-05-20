@@ -1,6 +1,7 @@
 #!/bin/bash
 
-make re
+make fclean
+make debug
 
 test -f checker || wget -O checker https://cdn.intra.42.fr/document/document/33389/checker_linux
 chmod +x checker
