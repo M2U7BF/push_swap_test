@@ -1,7 +1,12 @@
 #!/bin/bash
 
 make fclean
-make debug
+make -n debug
+if [ $? -eq 0 ]; then
+  make debug
+else
+  make
+fi
 
 test -f checker || wget -O checker https://cdn.intra.42.fr/document/document/33389/checker_linux
 chmod +x checker
